@@ -6,11 +6,12 @@ COPY .docker/nginx/conf.d/default.conf /etc/nginx/http.d/default.conf
 COPY entrypoint.sh /etc/entrypoint.sh
 
 COPY --chown=www-data:www-data . /var/www/html
+COPY --chown=www-data:www-data . /var/www/html
 WORKDIR /var/www/html
 
-# RUN composer install --no-interaction --optimize-autoloader --no-dev
-# RUN npm install && npm run build
-# RUN php artisan optimize
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+RUN npm install && npm run build
+RUN php artisan optimize
 
-EXPOSE 80 443
+EXPOSE 80
 ENTRYPOINT ["/etc/entrypoint.sh"]
