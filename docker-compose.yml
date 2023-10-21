@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+    backend:
+        image: vaninanton/laravel-demo:backend
+        build:
+            context: .
+            dockerfile: ./.docker/backend/Dockerfile
+        platform: linux/amd64
+        restart: unless-stopped
+        tty: true
+        working_dir: /var/www/html
+        ports:
+            - "${WEBSERVER_EXT_PORT:-8081}:80"
+        volumes:
+            - ./:/var/www/html
+
