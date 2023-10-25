@@ -10,7 +10,9 @@ services:
         command: ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
         volumes:
             - ./:/var/www/html
-            - exclude_vendor:/var/www/html/vendor
+            - vendor:/var/www/html/vendor
+            - node_modules:/var/www/html/node_modules
+            - build:/var/www/public/build
         #     - ./.docker/backend/etc/supervisord.conf:/etc/supervisord.conf
         #     - ./.docker/backend/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
         #     - ./.docker/backend/etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
@@ -19,4 +21,6 @@ services:
             - 8881:80
 
 volumes:
-    exclude_vendor:
+    vendor:
+    node_modules:
+    build:
