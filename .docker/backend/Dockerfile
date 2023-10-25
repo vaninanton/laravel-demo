@@ -34,7 +34,7 @@ WORKDIR /var/www/html
 COPY --chown=www-data:www-data . .
 
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-RUN composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --no-dev
+RUN composer install --no-ansi --no-interaction --no-progress --prefer-dist --no-dev
 RUN npm install
 RUN npm run build
 RUN php artisan optimize
