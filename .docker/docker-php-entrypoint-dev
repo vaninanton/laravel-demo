@@ -8,14 +8,13 @@ set -e
 /usr/local/bin/docker-php-entrypoint
 
 # ensure bind mount permissions are what we need
-chown -R www-data:www-data /var/www/public
+chown -R :www-data /var/www/html
 
-chmod -R 775 /var/www/public/storage /var/www/public/bootstrap/cache
+chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # run last minute build tools just for local dev
-cd /var/www/public
+cd /var/www/html
 composer dump-autoload
-cd /var/www/public/public
-
+cd /var/www/html/public
 
 exec "$@"

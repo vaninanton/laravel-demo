@@ -9,17 +9,23 @@ ARG APP_VERSION
 
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
 
+# add custom php-fpm pool settings, these get written at entrypoint startup
 ENV FPM_PM_MAX_CHILDREN=20 \
     FPM_PM_START_SERVERS=2 \
     FPM_PM_MIN_SPARE_SERVERS=1 \
-    FPM_PM_MAX_SPARE_SERVERS=3 \
-    APP_VERSION=docker \
-    VITE_APP_VERSION=docker
+    FPM_PM_MAX_SPARE_SERVERS=3
 
+# set application environment variables
+ENV APP_NAME="Question Board" \
+    APP_ENV=production \
+    APP_DEBUG=false
+
+# copy entrypoint files
 COPY ./.docker/docker-php-* /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-php-entrypoint
 RUN chmod +x /usr/local/bin/docker-php-entrypoint-dev
 
+# copy nginx configuration
 COPY ./.docker/backend/etc/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./.docker/backend/etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 
@@ -36,5 +42,4 @@ RUN php artisan optimize
 EXPOSE 80
 
 # run supervisor
-ENTRYPOINT [ "/usr/local/bin/docker-php-entrypoint" ]
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
