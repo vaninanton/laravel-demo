@@ -8,8 +8,8 @@ services:
             dockerfile: ./.docker/backend/Dockerfile
         entrypoint: /usr/local/bin/docker-php-entrypoint-dev
         command: ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
-        # volumes:
-        #     - ./:/var/www/html
+        volumes:
+            - ./:/var/www/html
         #     - ./.docker/backend/etc/supervisord.conf:/etc/supervisord.conf
         #     - ./.docker/backend/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
         #     - ./.docker/backend/etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
